@@ -1,0 +1,273 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js" integrity="sha512-jzL0FvPiDtXef2o2XZJWgaEpVAihqquZT/tT89qCVaxVuHwJ/1DFcJ+8TBMXplSJXE8gLbVAUv+Lj20qHpGx+A==" crossorigin="anonymous"></script>
+
+<script>
+    $(function () {
+        $("#SbmDt").datepicker();
+    });
+</script>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Approval</title>
+</head>
+<body>
+    <h1>Approval API</h1>
+    <p><a href="@Url.Action("sendmailasync","home")">Click here go to Send mail API</a></p>
+    <div class="row">
+
+
+        <div class="col-md-6">
+            <div class="form-group mb-2">
+                <input type="text" name="Contents" id="Contents" class="form-control" placeholder="Contents" />
+            </div>
+            <div class="form-group mb-2">
+                <input type="text" name="contentsType" id="contentsType" class="form-control" placeholder="contentsType" />
+            </div>
+            <div class="form-group mb-2">
+                <input type="text" name="NotifyOption" id="NotifyOption" class="form-control" placeholder="NotifyOption" />
+            </div>
+            <div class="form-group mb-2">
+                <input type="text" name="UrgnYn" id="UrgnYn" class="form-control" placeholder="UrgnYn" />
+            </div>
+            <div class="form-group mb-2">
+                <input type="text" name="SbmDt" id="SbmDt" class="form-control" placeholder="SbmDt" />
+            </div>
+            <div class="form-group mb-2">
+                <input type="text" name="Subject" id="Subject" class="form-control" placeholder="Subject" />
+            </div>
+            <div class="form-group mb-2">
+                <input type="text" name="SbmLang" id="SbmLang" class="form-control" placeholder="SbmLang" />
+            </div>
+            <div class="form-group mb-2">
+                <input type="text" name="ApInfId" id="ApInfId" class="form-control" placeholder="ApInfId" />
+            </div>
+            <div class="form-group mb-2">
+                <input type="text" name="DocMngSaveCode" id="DocMngSaveCode" class="form-control" placeholder="DocMngSaveCode" />
+            </div>
+            <div class="form-group mb-2">
+                <input type="text" name="TimeZone" id="TimeZone" class="form-control" placeholder="Contents" />
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <button onclick="report()">Take Screenshot</button>
+
+            <div class="bug-container hide">
+                <div class="bug">
+                    <img width="75%" id="imgData" class="screen">
+                    <div class="region"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <hr />
+        <div class="form-group row" id="divApln">
+            <div class="col-md-1">
+                <input type="text" name="EpId" id="EpId" class="form-control" placeholder="EpId" />
+            </div>
+            <div class="col-md-1">
+                <input type="text" name="Seq" id="Seq" class="form-control" placeholder="Seq" />
+            </div>
+            <div class="col-md-1">
+                <input type="text" name="Role" id="Role" class="form-control" placeholder="Role" />
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="AplnStatsCode" id="AplnStatsCode" class="form-control" placeholder="AplnStatsCode" />
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="ArbPmtYn" id="ArbPmtYn" class="form-control" placeholder="ArbPmtYn" />
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="ContentsMdfyPmtYn" id="ContentsMdfyPmtYn" class="form-control" placeholder="ContentsMdfyPmtYn" />
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="AplnMdfyPmtYn" id="AplnMdfyPmtYn" class="form-control" placeholder="AplnMdfyPmtYn" />
+            </div>
+            <div class="col-md-1">
+                <button onclick="addrow()">Add</button>
+            </div>
+        </div>
+        <table id="tblData" class="mt-3 mb-3">
+            <thead>
+                <tr>
+                    <th>EpId</th>
+                    <th>Seq</th>
+                    <th>Role</th>
+                    <th>AplnStatsCode</th>
+                    <th>ArbPmtYn</th>
+                    <th>ContentsMdfyPmtYn</th>
+                    <th>AplnMdfyPmtYn</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+    <p class="mt-2 mb-2">
+        <input type="file" name="file" id="file" multiple />
+    </p>
+
+    <button class="btn btn-primary" onclick="submit()">Submit</button>
+    <p id="pResult" class="mt-2 mb-2"></p>
+</body>
+</html>
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+
+    table {
+        width: 100%;
+    }
+</style>
+<script>
+    let jsonObj = [];
+    let postData = {};
+    let pageScreenshot;
+    function submit() {
+        let Contents = $("#Contents").val();
+        let ContentsType = $("#ContentsType").val();
+        let NotifyOption = $("#NotifyOption").val();
+        let UrgnYn = $("#UrgnYn").val();
+        let SbmDt = $("#SbmDt").val();
+        let Subject = $("#Subject").val();
+        let SbmLang = $("#SbmLang").val();
+        let ApInfId = $("#ApInfId").val();
+        let DocMngSaveCode = $("#DocMngSaveCode").val();
+        let TimeZone = $("#TimeZone").val();
+
+        postData["Contents"] = Contents;
+        postData["ContentsType"] = ContentsType;
+        postData["NotifyOption"] = NotifyOption;
+        postData["SbmDt"] = SbmDt;
+        postData["Subject"] = Subject;
+        postData["SbmLang"] = SbmLang;
+        postData["ApInfId"] = ApInfId;
+        postData["DocMngSaveCode"] = DocMngSaveCode;
+        postData["TimeZone"] = TimeZone;
+        postData["UrgnYn"] = UrgnYn;
+        postData["Aplns"] = jsonObj;
+
+        debugger;
+        //data.append('file', $('#file')[0].files[0]);
+
+        var fileUpload = $("#file").get(0);
+        var files = fileUpload.files;
+
+        var fileData = new FormData();
+        fileData.append("obj", JSON.stringify(postData));
+        // Looping over all files and add it to FormData object
+        let totalFiles = 0;
+        for (var i = 0; i < files.length; i++) {
+            totalFiles = i;
+            fileData.append(files[i].name, files[i]);
+        }
+
+        if (totalFiles != 0) {
+            totalFiles = totalFiles + 1;
+        }
+        if ($("#imgData").prop('src') != "") {
+            fileData.append("screenshot", $("#imgData").prop('src'));
+        }
+
+        // Adding one more key to FormData object
+        $.ajax({
+            url: 'ApprovalPostAsync',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: fileData,
+            success: function (result) {
+                $("#pResult").text("Output: " + JSON.parse(result));
+                alert(result);
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        });
+
+        return false;
+    }
+
+    function addrow() {
+        debugger;
+        let EpId = $("#EpId").val();
+        let Seq = $("#Seq").val();
+        let Role = $("#Role").val();
+        let AplnStatsCode = $("#AplnStatsCode").val();
+        let ArbPmtYn = $("#ArbPmtYn").val();
+        let ContentsMdfyPmtYn = $("#ContentsMdfyPmtYn").val();
+        let AplnMdfyPmtYn = $("#AplnMdfyPmtYn").val();
+
+        $('#tblData tr:last').after('<tr><td>' + EpId + '</td><td>' + Seq + '</td><td>' + Role + '</td><td>' + AplnStatsCode + '</td><td>' + ArbPmtYn + '</td><td>' + ContentsMdfyPmtYn + '</td><td>' + AplnMdfyPmtYn + '</td></tr>');
+
+        let item = {};
+
+        item["EpId"] = EpId;
+        item["Seq"] = Seq;
+        item["Role"] = Role;
+        item["AplnStatsCode"] = AplnStatsCode;
+        item["ArbPmtYn"] = ArbPmtYn;
+        item["ContentsMdfyPmtYn"] = ContentsMdfyPmtYn;
+        item["AplnMdfyPmtYn"] = AplnMdfyPmtYn;
+
+        jsonObj.push(item);
+
+        $("#EpId").val("");
+        $("#Seq").val("");
+        $("#Role").val("");
+        $("#AplnStatsCode").val("");
+        $("#ArbPmtYn").val("");
+        $("#ContentsMdfyPmtYn").val("");
+        $("#AplnMdfyPmtYn").val("");
+
+        return false;
+    }
+
+
+    async function report() {
+        let screenshot = await makeScreenshot(); // png dataUrl
+        let img = q(".screen");
+        img.src = screenshot;
+
+        let c = q(".bug-container");
+        c.classList.remove('hide')
+
+        let box = await getBox();
+        c.classList.add('hide');
+    }
+
+    // ----- Helper functions
+
+    let q = s => document.querySelector(s); 
+    window.report = report; 
+
+    async function makeScreenshot(selector = "body") {
+        return new Promise((resolve, reject) => {
+            let node = document.querySelector(selector);
+
+            html2canvas(node, {
+                onrendered: (canvas) => {
+                    let pngUrl = canvas.toDataURL();
+                    resolve(pngUrl);
+                }
+            });
+        });
+    }
+
+</script>

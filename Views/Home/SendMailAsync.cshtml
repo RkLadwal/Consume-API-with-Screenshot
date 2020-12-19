@@ -1,0 +1,45 @@
+﻿@model ServerSide.Models.EmailModel
+@{
+    ViewBag.Title = "SendMail";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<h3>Send Email</h3>
+<p><a href="@Url.Action("approvalasync","home")">Click here go to Approval API</a></p>
+@using (Html.BeginForm("sendmailasync", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div style="margin-left: 17px;">
+        <div class="form-group row">
+            <div class="col-md-6">
+                @Html.TextBoxFor(x => x.UserId, new { @class = "form-control", @placeholder = "UserId (optional)", @type = "number" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                @Html.TextBoxFor(x => x.subject, new { @class = "form-control", @placeholder = "Subject", @required = "required" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                @Html.TextAreaFor(x => x.content, new { @class = "form-control", @placeholder = "Content", @rows = "5", @required = "required" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                @Html.TextBoxFor(x => x.sender, new { @class = "form-control", @placeholder = "Sender email", @required = "required" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                @Html.TextBoxFor(x => x.RecipientsTO, new { @class = "form-control", @placeholder = "To: abc@mail.com, xyz@mail.com", @required = "required" })
+            </div>
+        </div>
+        <input type="file" name="Files" multiple="multiple" />
+        <input type="submit" class="btn btn-primary mt-2" value="Send Email" style="margin-top:10px;" />
+        @if (ViewBag.Response != null)
+        {
+            <p style="margin-top:20px">Output: @ViewBag.Response</p>
+        }
+    </div>
+}
